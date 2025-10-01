@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evaluación Nivel 2 - Madurez Organizacional</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Formulario de registro inicial -->
+        <div class="registration-form" id="registrationForm">
+            <h2>Evaluación de Madurez - Nivel 2</h2>
+            <p class="form-description">
+                Esta evaluación mide el nivel de madurez de su organización en cuanto a procesos comunes de gestión de proyectos.
+                No hay respuestas correctas o incorrectas, solo su percepción sobre el estado actual de la organización.
+            </p>
+
+            <div class="form-group">
+                <label class="form-label" for="userName">Nombre completo *</label>
+                <input
+                    type="text"
+                    id="userName"
+                    class="form-input"
+                    placeholder="Ingresa tu nombre completo"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="userEmail">Correo electrónico *</label>
+                <input
+                    type="email"
+                    id="userEmail"
+                    class="form-input"
+                    placeholder="tu@correo.com"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="userCompany">Empresa/Organización *</label>
+                <input
+                    type="text"
+                    id="userCompany"
+                    class="form-input"
+                    placeholder="Nombre de la empresa"
+                    required
+                >
+            </div>
+
+            <button class="start-btn" onclick="startAssessment()">
+                Comenzar Evaluación
+            </button>
+        </div>
+
+        <!-- Assessment container (initially hidden) -->
+        <div class="quiz-wrapper" id="assessmentWrapper">
+            <div class="header">
+                <h1>Evaluación de Madurez - Nivel 2</h1>
+                <p>Procesos Comunes de Gestión de Proyectos</p>
+
+                <div class="user-info">
+                    <strong>Evaluador:</strong> <span id="displayUserName"></span> |
+                    <strong>Correo:</strong> <span id="displayUserEmail"></span> |
+                    <strong>Empresa:</strong> <span id="displayUserCompany"></span>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value" id="totalQuestions">20</div>
+                        <div class="stat-label">Total</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="answeredCount">0</div>
+                        <div class="stat-label">Respondidas</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="progressPercent">0%</div>
+                        <div class="stat-label">Progreso</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="assessment-instructions">
+                <h3>Instrucciones</h3>
+                <p>Para cada pregunta, seleccione el valor que mejor represente su opinión sobre el estado actual de su organización:</p>
+                <div class="scale-legend">
+                    <div class="scale-item">
+                        <strong>-3</strong> Totalmente en desacuerdo
+                    </div>
+                    <div class="scale-item">
+                        <strong>-2</strong> En desacuerdo
+                    </div>
+                    <div class="scale-item">
+                        <strong>-1</strong> Ligeramente en desacuerdo
+                    </div>
+                    <div class="scale-item">
+                        <strong>0</strong> Sin opinión
+                    </div>
+                    <div class="scale-item">
+                        <strong>+1</strong> Ligeramente de acuerdo
+                    </div>
+                    <div class="scale-item">
+                        <strong>+2</strong> De acuerdo
+                    </div>
+                    <div class="scale-item">
+                        <strong>+3</strong> Totalmente de acuerdo
+                    </div>
+                </div>
+            </div>
+
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <div id="questionContainer"></div>
+
+            <div class="navigation">
+                <div class="nav-info" id="questionIndicator">Pregunta 1 de 20</div>
+                <div class="nav-buttons">
+                    <button class="btn btn-secondary" id="prevBtn" onclick="previousQuestion()" disabled>
+                        Anterior
+                    </button>
+                    <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()">
+                        Siguiente
+                    </button>
+                </div>
+            </div>
+
+            <div class="loading" id="loadingIndicator">
+                <span class="spinner"></span>
+                Enviando resultados a Google Sheets...
+            </div>
+
+            <div class="success-message" id="successMessage">
+                ✅ Evaluación guardada exitosamente en Google Sheets
+            </div>
+
+            <div class="error-message" id="errorMessage">
+                ⚠️ Error al guardar. Los datos se guardaron localmente y se reintentará más tarde.
+            </div>
+
+            <div class="results" id="results">
+                <div class="results-header">
+                    <h2>Resultados de la Evaluación</h2>
+                    <p class="results-subtitle">Nivel 2 - Procesos Comunes</p>
+                </div>
+
+                <div class="score-display">
+                    <div class="score-circle">
+                        <div class="score-text">
+                            <div class="score-percentage" id="finalScore">0</div>
+                            <div class="score-subtitle">Puntuación Total</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="maturity-level" id="maturityLevel">
+                    <h3>Nivel de Madurez</h3>
+                    <div class="maturity-description" id="maturityDescription"></div>
+                </div>
+
+                <div class="category-results">
+                    <div class="category-results-title">Análisis Detallado</div>
+                    <div id="categoryResults"></div>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn btn-secondary" onclick="reviewAnswers()">
+                        Revisar Respuestas
+                    </button>
+                    <button class="btn btn-primary" onclick="restartAssessment()">
+                        Nueva Evaluación
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="questions-nivel2.js"></script>
+    <script src="app-nivel2.js"></script>
+</body>
+</html>
