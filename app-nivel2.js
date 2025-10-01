@@ -33,6 +33,9 @@ function startAssessment() {
         return;
     }
 
+    // Limpiar el flag de nivel 1 completado después de usarlo
+    sessionStorage.removeItem('nivel1Completed');
+
     // Guardar datos del usuario
     userData = {
         nombre: userName,
@@ -378,11 +381,33 @@ function restartAssessment() {
     document.getElementById('userCompany').value = '';
 }
 
+function goToHome() {
+    window.location.href = 'index.html?completed=nivel2';
+}
+
 // ============================================
-// REINTENTO DE ENVÍO DE DATOS PENDIENTES
+// INICIALIZACIÓN Y AUTOCOMPLETADO
 // ============================================
 
 window.addEventListener('load', async () => {
+    // Verificar si viene desde nivel 1
+    const nivel1Completed = sessionStorage.getItem('nivel1Completed');
+    const savedUserData = sessionStorage.getItem('userData');
+
+    if (nivel1Completed === 'true' && savedUserData) {
+        try {
+            const data = JSON.parse(savedUserData);
+            document.getElementById('userName').value = data.nombre || '';
+            document.getElementById('userEmail').value = data.correo || '';
+
+            // Mostrar mensaje de bienvenida
+            showWelcomeMessage(data.nombre);
+        } catch (error) {
+            console.error('Error al cargar datos del nivel 1:', error);
+        }
+    }
+
+    // Intentar enviar evaluaciones pendientes
     const evaluacionesPendientes = JSON.parse(localStorage.getItem('evaluacionesNivel2Pendientes') || '[]');
 
     if (evaluacionesPendientes.length > 0) {
@@ -408,3 +433,32 @@ window.addEventListener('load', async () => {
         localStorage.setItem('evaluacionesNivel2Pendientes', '[]');
     }
 });
+
+function showWelcomeMessage(nombre) {
+    const message = document.createElement('div');
+    message.style.cssText = `
+        position: fixed;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #22c55e;
+        color: white;
+        padding: 1rem 2rem;
+        border-radius: 0.5rem;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        z-index: 1000;
+        max-width: 90%;
+        text-align: center;
+    `;
+    message.innerHTML = `
+        <strong>¡Bienvenido ${nombre}!</strong><br>
+        <span style="font-size: 0.875rem;">Has completado el Nivel 1. Ahora evaluaremos la madurez organizacional.</span>
+    `;
+    document.body.appendChild(message);
+
+    setTimeout(() => {
+        message.style.opacity = '0';
+        message.style.transition = 'opacity 0.3s ease';
+        setTimeout(() => message.remove(), 300);
+    }, 5000);
+}

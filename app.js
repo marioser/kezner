@@ -385,6 +385,19 @@ function restartQuiz() {
     document.getElementById('userEmail').value = '';
 }
 
+function continueToLevel2() {
+    // Guardar datos del usuario en sessionStorage para usarlos en nivel 2
+    sessionStorage.setItem('userData', JSON.stringify(userData));
+    sessionStorage.setItem('nivel1Completed', 'true');
+
+    // Redirigir a nivel 2
+    window.location.href = 'nivel2.html';
+}
+
+function goToHome() {
+    window.location.href = 'index.html?completed=nivel1';
+}
+
 // ============================================
 // REINTENTO DE ENVÍO DE DATOS PENDIENTES
 // ============================================

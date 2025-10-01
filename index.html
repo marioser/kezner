@@ -3,158 +3,317 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evaluación de Gestión de Proyectos</title>
+    <title>Sistema de Evaluación de Gestión de Proyectos</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        .home-container {
+            max-width: 56rem;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .home-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .home-header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--foreground);
+        }
+
+        .home-header p {
+            font-size: 1rem;
+            color: var(--muted-foreground);
+        }
+
+        .assessment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .assessment-card {
+            background: var(--card);
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            padding: 2rem;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .assessment-card:hover {
+            border-color: var(--primary);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .assessment-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: var(--primary);
+            color: var(--primary-foreground);
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .assessment-card h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--foreground);
+        }
+
+        .assessment-card p {
+            font-size: 0.875rem;
+            color: var(--muted-foreground);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .assessment-features {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 1.5rem;
+        }
+
+        .assessment-features li {
+            font-size: 0.875rem;
+            color: var(--muted-foreground);
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .assessment-features li:last-child {
+            border-bottom: none;
+        }
+
+        .assessment-features li::before {
+            content: "✓";
+            color: var(--success);
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+
+        .assessment-btn {
+            width: 100%;
+            padding: 0.75rem 1.5rem;
+            background: var(--primary);
+            color: var(--primary-foreground);
+            border: none;
+            border-radius: calc(var(--radius) - 2px);
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .assessment-btn:hover {
+            opacity: 0.9;
+            transform: scale(1.02);
+        }
+
+        .info-section {
+            background: var(--muted);
+            border-radius: var(--radius);
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .info-section h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--foreground);
+        }
+
+        .info-section p {
+            font-size: 0.875rem;
+            color: var(--muted-foreground);
+            line-height: 1.6;
+            margin-bottom: 0.75rem;
+        }
+
+        .recommended-path {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .recommended-path h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--primary);
+        }
+
+        .path-steps {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .path-step {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            color: var(--muted-foreground);
+        }
+
+        .path-arrow {
+            color: var(--primary);
+            font-size: 1.25rem;
+        }
+
+        @media (max-width: 640px) {
+            .assessment-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .path-steps {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .path-arrow {
+                transform: rotate(90deg);
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Formulario de registro inicial -->
-        <div class="registration-form" id="registrationForm">
-            <h2>Registro para la Evaluación</h2>
-            <p class="form-description">
-                Por favor ingresa tu información para comenzar la evaluación de gestión de proyectos.
-            </p>
-            
-            <div class="form-group">
-                <label class="form-label" for="userName">Nombre completo *</label>
-                <input 
-                    type="text" 
-                    id="userName" 
-                    class="form-input" 
-                    placeholder="Ingresa tu nombre completo"
-                    required
-                >
-            </div>
-            
-            <div class="form-group">
-                <label class="form-label" for="userEmail">Correo electrónico *</label>
-                <input 
-                    type="email" 
-                    id="userEmail" 
-                    class="form-input" 
-                    placeholder="tu@correo.com"
-                    required
-                >
-            </div>
-            
-            <button class="start-btn" onclick="startQuiz()">
-                Comenzar Evaluación
-            </button>
+    <div class="home-container">
+        <div class="home-header">
+            <h1>Sistema de Evaluación de Gestión de Proyectos</h1>
+            <p>Evalúa tus conocimientos y la madurez organizacional en gestión de proyectos</p>
         </div>
 
-        <!-- Quiz container (initially hidden) -->
-        <div class="quiz-wrapper" id="quizWrapper">
-            <div class="header">
-                <h1>Evaluación de Gestión de Proyectos</h1>
-                <p>Evaluación basada en los estándares del PMBOK</p>
-                
-                <div class="user-info">
-                    <strong>Evaluador:</strong> <span id="displayUserName"></span> | 
-                    <strong>Correo:</strong> <span id="displayUserEmail"></span>
-                </div>
-                
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-value" id="totalQuestions">80</div>
-                        <div class="stat-label">Total</div>
+        <div class="assessment-grid">
+            <!-- Nivel 1: Quiz PMBOK -->
+            <div class="assessment-card" onclick="goToAssessment('nivel1')">
+                <span class="assessment-badge">NIVEL 1</span>
+                <h2>Evaluación de Conocimientos PMBOK</h2>
+                <p>
+                    Pon a prueba tus conocimientos en gestión de proyectos basado en los estándares del PMBOK.
+                    Un cuestionario con 80 preguntas que cubren todas las áreas de conocimiento.
+                </p>
+                <ul class="assessment-features">
+                    <li>80 preguntas tipo test</li>
+                    <li>8 áreas de conocimiento</li>
+                    <li>Respuestas correctas e incorrectas</li>
+                    <li>Resultados por categoría</li>
+                    <li>Tiempo estimado: 40-60 min</li>
+                </ul>
+                <button class="assessment-btn">Comenzar Nivel 1</button>
+            </div>
+
+            <!-- Nivel 2: Madurez Organizacional -->
+            <div class="assessment-card" onclick="goToAssessment('nivel2')">
+                <span class="assessment-badge">NIVEL 2</span>
+                <h2>Evaluación de Madurez Organizacional</h2>
+                <p>
+                    Evalúa el nivel de madurez de tu organización en cuanto a procesos comunes de gestión de proyectos.
+                    Assessment basado en escala Likert sin respuestas correctas.
+                </p>
+                <ul class="assessment-features">
+                    <li>20 preguntas de evaluación</li>
+                    <li>Escala Likert (-3 a +3)</li>
+                    <li>Procesos comunes organizacionales</li>
+                    <li>Análisis de nivel de madurez</li>
+                    <li>Tiempo estimado: 10-15 min</li>
+                </ul>
+                <button class="assessment-btn">Comenzar Nivel 2</button>
+            </div>
+        </div>
+
+        <!-- Información adicional -->
+        <div class="info-section">
+            <h3>¿Qué evaluación debo realizar?</h3>
+            <p>
+                <strong>Nivel 1 - Evaluación de Conocimientos:</strong> Ideal si deseas evaluar tus conocimientos
+                individuales sobre gestión de proyectos según el PMBOK. Esta evaluación mide tu comprensión de conceptos,
+                procesos y mejores prácticas.
+            </p>
+            <p>
+                <strong>Nivel 2 - Evaluación de Madurez Organizacional:</strong> Recomendada para evaluar cómo tu
+                organización implementa procesos de gestión de proyectos. Evalúa la madurez organizacional y la
+                estandarización de procesos.
+            </p>
+
+            <div class="recommended-path">
+                <h4>📋 Ruta Recomendada</h4>
+                <div class="path-steps">
+                    <div class="path-step">
+                        <strong>1.</strong> Nivel 1 (Conocimientos)
                     </div>
-                    <div class="stat-card">
-                        <div class="stat-value" id="answeredCount">0</div>
-                        <div class="stat-label">Respondidas</div>
+                    <span class="path-arrow">→</span>
+                    <div class="path-step">
+                        <strong>2.</strong> Nivel 2 (Madurez)
                     </div>
-                    <div class="stat-card">
-                        <div class="stat-value" id="currentScore">0%</div>
-                        <div class="stat-label">Puntuación</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="filter-section">
-                <div class="filter-label">Filtrar por categoría</div>
-                <div class="filter-buttons">
-                    <button class="btn active" onclick="filterByCategory('all')">Todas</button>
-                    <button class="btn" onclick="filterByCategory('Time Management')">Tiempo</button>
-                    <button class="btn" onclick="filterByCategory('Procurement Management')">Adquisiciones</button>
-                    <button class="btn" onclick="filterByCategory('Cost Management')">Costos</button>
-                    <button class="btn" onclick="filterByCategory('Quality Management')">Calidad</button>
-                    <button class="btn" onclick="filterByCategory('Risk Management')">Riesgos</button>
-                    <button class="btn" onclick="filterByCategory('Human Resources Management')">RRHH</button>
-                    <button class="btn" onclick="filterByCategory('Communications Management')">Comunicaciones</button>
-                    <button class="btn" onclick="filterByCategory('Scope Management')">Alcance</button>
-                </div>
-            </div>
-
-            <div class="progress-container">
-                <div class="progress-bar">
-                    <div class="progress-fill" id="progressFill" style="width: 0%"></div>
-                </div>
-            </div>
-
-            <div id="questionContainer"></div>
-
-            <div class="navigation">
-                <div class="nav-info" id="questionIndicator">Pregunta 1 de 80</div>
-                <div class="nav-buttons">
-                    <button class="btn btn-secondary" id="prevBtn" onclick="previousQuestion()" disabled>
-                        Anterior
-                    </button>
-                    <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()">
-                        Siguiente
-                    </button>
-                </div>
-            </div>
-
-            <div class="loading" id="loadingIndicator">
-                <span class="spinner"></span>
-                Enviando resultados a Google Sheets...
-            </div>
-
-            <div class="success-message" id="successMessage">
-                ✅ Evaluación guardada exitosamente en Google Sheets
-            </div>
-
-            <div class="error-message" id="errorMessage">
-                ⚠️ Error al guardar. Los datos se guardaron localmente y se reintentará más tarde.
-            </div>
-
-            <div class="results" id="results">
-                <div class="results-header">
-                    <h2>Resultados de la Evaluación</h2>
-                    <p class="results-subtitle">Has completado la evaluación</p>
-                </div>
-                
-                <div class="score-display">
-                    <div class="score-circle">
-                        <svg width="150" height="150">
-                            <circle cx="75" cy="75" r="65" class="score-circle-bg"/>
-                            <circle id="scoreCircle" cx="75" cy="75" r="65" class="score-circle-fill"
-                                    stroke-dasharray="408" stroke-dashoffset="408"/>
-                        </svg>
-                        <div class="score-text">
-                            <div class="score-percentage" id="finalScore">0%</div>
-                            <div class="score-subtitle">Puntuación</div>
-                        </div>
+                    <span class="path-arrow">→</span>
+                    <div class="path-step">
+                        <strong>3.</strong> Análisis Completo
                     </div>
                 </div>
-
-                <div class="category-results">
-                    <div class="category-results-title">Resultados por Categoría</div>
-                    <div id="categoryResults"></div>
-                </div>
-
-                <div class="action-buttons">
-                    <button class="btn btn-secondary" onclick="reviewAnswers()">
-                        Revisar Respuestas
-                    </button>
-                    <button class="btn btn-primary" onclick="restartQuiz()">
-                        Nueva Evaluación
-                    </button>
-                </div>
+                <p style="margin-top: 1rem; margin-bottom: 0;">
+                    Al completar el Nivel 1, tendrás la opción de continuar directamente al Nivel 2 para una evaluación completa.
+                </p>
             </div>
         </div>
     </div>
 
-    <script src="questions.js"></script>
-    <script src="app.js"></script>
+    <script>
+        function goToAssessment(nivel) {
+            if (nivel === 'nivel1') {
+                window.location.href = 'quiz-nivel1.html';
+            } else if (nivel === 'nivel2') {
+                window.location.href = 'nivel2.html';
+            }
+        }
+
+        // Detectar si viene desde otra evaluación
+        window.addEventListener('load', () => {
+            const params = new URLSearchParams(window.location.search);
+            const completed = params.get('completed');
+
+            if (completed === 'nivel1') {
+                // Mostrar mensaje de felicitación y sugerencia
+                showCompletionMessage('nivel1');
+            }
+        });
+
+        function showCompletionMessage(nivel) {
+            const message = document.createElement('div');
+            message.style.cssText = `
+                position: fixed;
+                top: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: #22c55e;
+                color: white;
+                padding: 1rem 2rem;
+                border-radius: 0.5rem;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                z-index: 1000;
+                animation: slideDown 0.3s ease;
+            `;
+            message.textContent = '✅ ¡Nivel 1 completado! ¿Deseas continuar con el Nivel 2?';
+            document.body.appendChild(message);
+
+            setTimeout(() => {
+                message.style.animation = 'slideUp 0.3s ease';
+                setTimeout(() => message.remove(), 300);
+            }, 5000);
+        }
+    </script>
 </body>
 </html>

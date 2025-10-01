@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evaluación de Gestión de Proyectos</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Formulario de registro inicial -->
+        <div class="registration-form" id="registrationForm">
+            <h2>Registro para la Evaluación</h2>
+            <p class="form-description">
+                Por favor ingresa tu información para comenzar la evaluación de gestión de proyectos.
+            </p>
+            
+            <div class="form-group">
+                <label class="form-label" for="userName">Nombre completo *</label>
+                <input 
+                    type="text" 
+                    id="userName" 
+                    class="form-input" 
+                    placeholder="Ingresa tu nombre completo"
+                    required
+                >
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label" for="userEmail">Correo electrónico *</label>
+                <input 
+                    type="email" 
+                    id="userEmail" 
+                    class="form-input" 
+                    placeholder="tu@correo.com"
+                    required
+                >
+            </div>
+            
+            <button class="start-btn" onclick="startQuiz()">
+                Comenzar Evaluación
+            </button>
+        </div>
+
+        <!-- Quiz container (initially hidden) -->
+        <div class="quiz-wrapper" id="quizWrapper">
+            <div class="header">
+                <h1>Evaluación de Gestión de Proyectos</h1>
+                <p>Evaluación basada en los estándares del PMBOK</p>
+                
+                <div class="user-info">
+                    <strong>Evaluador:</strong> <span id="displayUserName"></span> | 
+                    <strong>Correo:</strong> <span id="displayUserEmail"></span>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value" id="totalQuestions">80</div>
+                        <div class="stat-label">Total</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="answeredCount">0</div>
+                        <div class="stat-label">Respondidas</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="currentScore">0%</div>
+                        <div class="stat-label">Puntuación</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="filter-section">
+                <div class="filter-label">Filtrar por categoría</div>
+                <div class="filter-buttons">
+                    <button class="btn active" onclick="filterByCategory('all')">Todas</button>
+                    <button class="btn" onclick="filterByCategory('Time Management')">Tiempo</button>
+                    <button class="btn" onclick="filterByCategory('Procurement Management')">Adquisiciones</button>
+                    <button class="btn" onclick="filterByCategory('Cost Management')">Costos</button>
+                    <button class="btn" onclick="filterByCategory('Quality Management')">Calidad</button>
+                    <button class="btn" onclick="filterByCategory('Risk Management')">Riesgos</button>
+                    <button class="btn" onclick="filterByCategory('Human Resources Management')">RRHH</button>
+                    <button class="btn" onclick="filterByCategory('Communications Management')">Comunicaciones</button>
+                    <button class="btn" onclick="filterByCategory('Scope Management')">Alcance</button>
+                </div>
+            </div>
+
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <div id="questionContainer"></div>
+
+            <div class="navigation">
+                <div class="nav-info" id="questionIndicator">Pregunta 1 de 80</div>
+                <div class="nav-buttons">
+                    <button class="btn btn-secondary" id="prevBtn" onclick="previousQuestion()" disabled>
+                        Anterior
+                    </button>
+                    <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()">
+                        Siguiente
+                    </button>
+                </div>
+            </div>
+
+            <div class="loading" id="loadingIndicator">
+                <span class="spinner"></span>
+                Enviando resultados a Google Sheets...
+            </div>
+
+            <div class="success-message" id="successMessage">
+                ✅ Evaluación guardada exitosamente en Google Sheets
+            </div>
+
+            <div class="error-message" id="errorMessage">
+                ⚠️ Error al guardar. Los datos se guardaron localmente y se reintentará más tarde.
+            </div>
+
+            <div class="results" id="results">
+                <div class="results-header">
+                    <h2>Resultados de la Evaluación</h2>
+                    <p class="results-subtitle">Has completado la evaluación</p>
+                </div>
+                
+                <div class="score-display">
+                    <div class="score-circle">
+                        <svg width="150" height="150">
+                            <circle cx="75" cy="75" r="65" class="score-circle-bg"/>
+                            <circle id="scoreCircle" cx="75" cy="75" r="65" class="score-circle-fill"
+                                    stroke-dasharray="408" stroke-dashoffset="408"/>
+                        </svg>
+                        <div class="score-text">
+                            <div class="score-percentage" id="finalScore">0%</div>
+                            <div class="score-subtitle">Puntuación</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="category-results">
+                    <div class="category-results-title">Resultados por Categoría</div>
+                    <div id="categoryResults"></div>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn btn-secondary" onclick="reviewAnswers()">
+                        Revisar Respuestas
+                    </button>
+                    <button class="btn btn-primary" onclick="continueToLevel2()">
+                        Continuar a Nivel 2
+                    </button>
+                    <button class="btn btn-secondary" onclick="goToHome()">
+                        Volver al Inicio
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="questions.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
