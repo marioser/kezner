@@ -1,9 +1,15 @@
+/* ============================================
+   ESTILOS CSS - SISTEMA DE EVALUACIÓN PMBOK
+   ============================================ */
+
+/* Reset y configuración base */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+/* Variables CSS - Sistema de colores inspirado en shadcn/ui */
 :root {
     --background: #ffffff;
     --foreground: #0a0a0a;
@@ -26,6 +32,7 @@
     --success: #22c55e;
 }
 
+/* Estilos base del body */
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     background-color: #fafafa;
@@ -35,12 +42,15 @@ body {
     padding: 2rem 1rem;
 }
 
+/* Container principal */
 .container {
     max-width: 42rem;
     margin: 0 auto;
 }
 
-/* Formulario de registro */
+/* ============================================
+   FORMULARIO DE REGISTRO
+   ============================================ */
 .registration-form {
     background: var(--card);
     border: 1px solid var(--border);
@@ -104,7 +114,9 @@ body {
     cursor: not-allowed;
 }
 
-/* Quiz container initially hidden */
+/* ============================================
+   QUIZ WRAPPER
+   ============================================ */
 .quiz-wrapper {
     display: none;
 }
@@ -113,6 +125,9 @@ body {
     display: block;
 }
 
+/* ============================================
+   HEADER
+   ============================================ */
 .header {
     background: var(--card);
     border: 1px solid var(--border);
@@ -141,6 +156,9 @@ body {
     color: var(--muted-foreground);
 }
 
+/* ============================================
+   ESTADÍSTICAS
+   ============================================ */
 .stats-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -168,6 +186,9 @@ body {
     letter-spacing: 0.05em;
 }
 
+/* ============================================
+   FILTROS
+   ============================================ */
 .filter-section {
     background: var(--card);
     border: 1px solid var(--border);
@@ -189,6 +210,9 @@ body {
     color: var(--muted-foreground);
 }
 
+/* ============================================
+   BOTONES
+   ============================================ */
 .btn {
     padding: 0.5rem 1rem;
     border: 1px solid var(--border);
@@ -237,6 +261,9 @@ body {
     cursor: not-allowed;
 }
 
+/* ============================================
+   BARRA DE PROGRESO
+   ============================================ */
 .progress-container {
     margin-bottom: 1.5rem;
 }
@@ -254,6 +281,9 @@ body {
     transition: width 0.3s ease;
 }
 
+/* ============================================
+   TARJETA DE PREGUNTA
+   ============================================ */
 .question-card {
     background: var(--card);
     border: 1px solid var(--border);
@@ -295,6 +325,9 @@ body {
     line-height: 1.6;
 }
 
+/* ============================================
+   OPCIONES DE RESPUESTA
+   ============================================ */
 .options-container {
     space-y: 0.75rem;
 }
@@ -341,6 +374,9 @@ body {
     line-height: 1.4;
 }
 
+/* ============================================
+   NAVEGACIÓN
+   ============================================ */
 .navigation {
     display: flex;
     justify-content: space-between;
@@ -361,6 +397,9 @@ body {
     gap: 0.5rem;
 }
 
+/* ============================================
+   RESULTADOS
+   ============================================ */
 .results {
     display: none;
     background: var(--card);
@@ -475,6 +514,10 @@ body {
     margin-top: 2rem;
 }
 
+/* ============================================
+   INDICADORES DE ESTADO
+   ============================================ */
+
 /* Loading indicator */
 .loading {
     display: none;
@@ -535,6 +578,9 @@ body {
     display: block;
 }
 
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
 @media (max-width: 640px) {
     .stats-grid {
         grid-template-columns: 1fr;
