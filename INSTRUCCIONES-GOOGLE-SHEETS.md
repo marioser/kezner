@@ -21,7 +21,7 @@ El nuevo script maneja **automáticamente** ambos niveles:
 
 1. En tu Google Sheet, ve al menú: **Extensiones → Apps Script**
 2. Se abrirá una nueva pestaña con el editor de Apps Script
-3. Verás un archivo llamado `Code.gs` con código de ejemplo
+3. Verás un archivo por defecto con código de ejemplo
 4. **Selecciona y borra** todo el código de ejemplo
 
 ## 📋 Paso 3: Copiar el Script
