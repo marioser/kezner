@@ -1,5 +1,5 @@
 // ============================================
-// Google Apps Script - Recepción de Datos
+// Google Apps Script - Recepcion de Datos
 // ============================================
 // Este script recibe datos de ambos cuestionarios:
 // - Nivel 1: Quiz con respuestas correctas
@@ -10,10 +10,10 @@ function doPost(e) {
     // Obtener datos del POST
     const datos = JSON.parse(e.postData.contents);
 
-    // Identificar el tipo de evaluación
+    // Identificar el tipo de evaluacion
     const tipo = datos.tipo || 'nivel1'; // Por defecto nivel1 para retrocompatibilidad
 
-    // Obtener la hoja de cálculo activa
+    // Obtener la hoja de calculo activa
     const ss = SpreadsheetApp.getActiveSpreadsheet();
 
     if (tipo === 'nivel2') {
@@ -58,7 +58,7 @@ function procesarNivel1(ss, datos) {
       'Preguntas Correctas',
       'Filtro Aplicado',
 
-      // Puntajes por categoría
+      // Puntajes por categoria
       'Scope Management',
       'Time Management',
       'Cost Management',
@@ -74,9 +74,15 @@ function procesarNivel1(ss, datos) {
 
     sheet.getRange(1, 1, 1, headers.length).setValues([headers]);
     sheet.getRange(1, 1, 1, headers.length).setFontWeight('bold');
+
+    // Ajustar ancho de columnas
+    sheet.setColumnWidth(1, 150);  // Timestamp
+    sheet.setColumnWidth(2, 200);  // Nombre
+    sheet.setColumnWidth(3, 200);  // Correo
+    sheet.setColumnWidth(17, 300); // Respuestas Detalladas
   }
 
-  // Preparar datos de categorías
+  // Preparar datos de categorias
   const categorias = [
     formatearCategoria(datos.scopeManagement),
     formatearCategoria(datos.timeManagement),
@@ -125,14 +131,14 @@ function procesarNivel2(ss, datos) {
       // Puntuaciones
       'Puntaje Total',
       'Puntaje Promedio',
-      'Puntaje Máximo Posible',
-      'Puntaje Mínimo Posible',
+      'Puntaje Maximo Posible',
+      'Puntaje Minimo Posible',
 
       // Nivel de Madurez
       'Nivel de Madurez',
-      'Descripción',
+      'Descripcion',
 
-      // Estadísticas
+      // Estadisticas
       'Tiempo (minutos)',
       'Total Preguntas',
       'Respuestas Positivas (+1 a +3)',
@@ -145,6 +151,15 @@ function procesarNivel2(ss, datos) {
 
     sheet.getRange(1, 1, 1, headers.length).setValues([headers]);
     sheet.getRange(1, 1, 1, headers.length).setFontWeight('bold');
+
+    // Ajustar ancho de columnas
+    sheet.setColumnWidth(1, 150);  // Timestamp
+    sheet.setColumnWidth(2, 200);  // Nombre
+    sheet.setColumnWidth(3, 200);  // Correo
+    sheet.setColumnWidth(4, 200);  // Empresa
+    sheet.setColumnWidth(9, 200);  // Nivel de Madurez
+    sheet.setColumnWidth(10, 400); // Descripcion
+    sheet.setColumnWidth(16, 300); // Respuestas Detalladas
   }
 
   // Preparar fila de datos
@@ -179,10 +194,22 @@ function formatearCategoria(categoria) {
   return categoria.correct + '/' + categoria.total;
 }
 
-// Función para manejar GET requests (opcional)
+// Funcion para manejar GET requests (opcional)
 function doGet(e) {
   return ContentService.createTextOutput(JSON.stringify({
     result: 'success',
     message: 'Servicio funcionando correctamente'
   })).setMimeType(ContentService.MimeType.JSON);
+}
+
+// ============================================
+// Funcion de Prueba (Opcional)
+// ============================================
+// Ejecuta esta funcion para verificar que el script tiene permisos
+function testearConfiguracion() {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  Logger.log('Spreadsheet ID: ' + ss.getId());
+  Logger.log('Spreadsheet Name: ' + ss.getName());
+  Logger.log('Configuracion correcta!');
+  return 'OK';
 }
